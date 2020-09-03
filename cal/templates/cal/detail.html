@@ -1,0 +1,22 @@
+{% extends 'cal/base.html' %}
+
+
+{% block content %}
+<div class="clearfix">
+    <a class="btn btn-info left" href="{% url 'cal:calendar' %}"> Calendar </a>
+  </div>
+  
+<div class="container top">
+    Title: {{ event.title }}<br>
+    Description: {{ event.description }}<br>
+    Starts: {{ event.start_time }}<br>
+    Ends: {{ event.end_time }} <i style="color:grey;">(Length: {{ length }})</i> <br> 
+</div>
+
+<style>
+    .top {
+        margin-top: 10%;
+    }
+</style>
+
+{% endblock %}

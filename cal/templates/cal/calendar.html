@@ -1,0 +1,123 @@
+{% extends 'cal/base.html' %}
+
+{% block title %}
+Calendr
+{% endblock %}
+
+{% block content %}
+    
+<div class="container top">
+    <div class="clearfix">
+        <a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
+        <button class="talk"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+        <a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
+        <a class="btn btn-info right" href="{% url 'cal:event_new' %}"> New Event </a>
+    </div>
+</div>
+<div class="container" id="calendar">
+    {{ calendar }}
+</div>
+
+<div style="visibility: hidden">
+    <h3 class="content"></h3>
+</div>
+<style>
+.top {
+    margin-top: 5%;
+}
+.talk {
+    border: none;
+    outline: none;
+    margin-left: 35%;
+}
+</style>
+
+<script>
+    const btn = document.querySelector('.talk');
+    const content = document.querySelector('.content');
+
+    const greetings = ['hi, how are you doing today']
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.onstart = function() {
+        console.log('voice has been ACTIVATED');
+    };
+
+    recognition.onresult = function(event) {
+        const current = event.resultIndex;
+
+        const transcript = event.results[current][0].transcript;
+        content.textContent = transcript;
+        readOutLoud(transcript);
+    }
+
+    btn.addEventListener('click', () => {
+        recognition.start();
+    });
+
+
+    function readOutLoud(message) {
+        const speech = new SpeechSynthesisUtterance();
+        
+        if(message.includes('hello')){
+            // const greetMesg = greetings[Math.floor(Math.random() * greetings.length)];
+            const greetMesg = 'hi, how are you doing today';
+            // const userSaid = voice.onendspeech();
+            // console.log(userSaid);
+            speech.text = greetMesg;
+        }
+
+        if(message.includes('hi')){
+            // const greetMesg = greetings[Math.floor(Math.random() * greetings.length)];
+            const greetMesg = 'hi, how are you doing today';
+            speech.text = greetMesg;
+        }
+
+        if(message.includes('what\'s my agenda today')){
+            // const greetMesg = greetings[Math.floor(Math.random() * greetings.length)];
+            const greetMesg = 'your agenda today is: ';
+            // ourday = document.getElementById('calendar');
+            // for (act in ourday) {
+            //     console.log(act);
+            //     speech.text = act;
+            // }
+            // speech.text = act + greetMesg;
+        }
+
+        if(message.includes('agenda')){
+            // const greetMesg = greetings[Math.floor(Math.random() * greetings.length)];
+            const greetMesg = 'this is your agenda';
+            // ourday = document.getElementById('calendar');
+            speech.text = greetMesg;
+        }
+
+        if(message.includes('new event')){
+            // const greetMesg = greetings[Math.floor(Math.random() * greetings.length)];
+            const greetMesg = 'let\'s create a new event';
+            var url = "{% url 'cal:event_new' %}";
+            // var id = $(this).attr('id');
+            document.location.href = url;
+            // recognition.addEventListener('end', function() {
+            //     var title = transcript;
+            //     console.log(title);
+            //     console.log('new event creating');
+            // });
+            // ourday = document.getElementById('calendar');
+            speech.text = greetMesg;
+        }
+
+    // if(message.)
+
+    // speech.text = message;
+    // speech.onerror = // todo: 'error'
+    speech.volume = 1;
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    window.speechSynthesis.speak(speech);
+}
+
+</script>
+{% endblock %}
