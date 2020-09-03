@@ -13,7 +13,7 @@ SECRET_KEY = '&j!&ssf^o%auy0zl35rj9u^1onwu$iytvld^5&zj)rfl)1lucb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['calenio.herokuapp.com']
 
 
 # Application definition
