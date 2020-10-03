@@ -13,13 +13,19 @@ SECRET_KEY = '&j!&ssf^o%auy0zl35rj9u^1onwu$iytvld^5&zj)rfl)1lucb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['calenio.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1',
+        'calenio.herokuapp.com'
+    ]
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # dev only
 
 # Application definition
 
 INSTALLED_APPS = [
     'cal',
+    'accounts',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +49,7 @@ ROOT_URLCONF = 'calendr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -58,6 +64,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'calendr.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'tmp/emails')
+EMAIL_HOST_USER = 'test@example.com'
+DEFAULT_FROM_EMAIL = 'test@example.com'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -109,3 +119,44 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
 STATIC_URL = '/static/'
 
+ENABLE_USER_ACTIVATION = True
+DISABLE_USERNAME = False
+LOGIN_VIA_EMAIL = True
+LOGIN_VIA_EMAIL_OR_USERNAME = False
+LOGIN_REDIRECT_URL = 'cal:calendar'
+LOGIN_URL = 'accounts:log_in'
+USE_REMEMBER_ME = True
+
+RESTORE_PASSWORD_VIA_EMAIL_OR_USERNAME = False
+ENABLE_ACTIVATION_AFTER_EMAIL_CHANGE = True
+
+SIGN_UP_FIELDS = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+if DISABLE_USERNAME:
+    SIGN_UP_FIELDS = ['first_name', 'last_name', 'email', 'password1', 'password2']
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+USE_I18N = True
+USE_L10N = True
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', ('English')),
+    ('ua', ('Ukrainian')),
+    ('zh-Hans', ('Simplified Chinese')),
+]
+
+TIME_ZONE = 'UTC'
+USE_TZ = True
+# STATIC_ROOT = os.path.join(CONTENT_DIR, 'static')
+# STATIC_URL = '/static/'
+
+# MEDIA_ROOT = os.path.join(CONTENT_DIR, 'media')
+# MEDIA_URL = '/media/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(CONTENT_DIR, 'assets'),
+# ]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
