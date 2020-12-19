@@ -17,6 +17,15 @@ ALLOWED_HOSTS = ['127.0.0.1',
         'calenio.herokuapp.com'
     ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+# os.getenv('EMAIL_HOST')
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'welcome.amongus@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ihateschool1.'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # dev only
 
@@ -24,8 +33,8 @@ if DEBUG:
 
 INSTALLED_APPS = [
     'cal',
-    'accounts',
     'bootstrap4',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,7 +133,6 @@ DISABLE_USERNAME = False
 LOGIN_VIA_EMAIL = True
 LOGIN_VIA_EMAIL_OR_USERNAME = False
 LOGIN_REDIRECT_URL = 'cal:calendar'
-LOGIN_URL = 'accounts:log_in'
 USE_REMEMBER_ME = True
 
 RESTORE_PASSWORD_VIA_EMAIL_OR_USERNAME = False

@@ -9,7 +9,7 @@ Calendr
 <div class="container top">
     <div class="clearfix">
         <a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
-        <a class="btn btn-info left" href="{% url 'accounts:account-view' %}"> Profile </a>
+        <a class="btn btn-info left" href="{% url 'cal:calendar' %}"> {{ today }} </a>
         <button class="talk"><i class="fa fa-microphone" aria-hidden="true"></i></button>
         <a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
         <a class="btn btn-info right" href="{% url 'cal:event_new' %}"> New Event </a>
@@ -29,7 +29,7 @@ Calendr
 .talk {
     border: none;
     outline: none;
-    margin-left: 35%;
+    margin-left: 25%;
 }
 </style>
 
@@ -52,7 +52,7 @@ Calendr
         const transcript = event.results[current][0].transcript;
         content.textContent = transcript;
         readOutLoud(transcript);
-    }
+    };
 
     btn.addEventListener('click', () => {
         recognition.start();

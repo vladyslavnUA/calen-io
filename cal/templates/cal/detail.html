@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
+{% load crispy_forms_tags %}
 <div class="clearfix">
     <a class="btn btn-info left" href="{% url 'cal:calendar' %}"> Calendar </a>
     <button class="talk"><i class="fa fa-microphone" aria-hidden="true"></i></button>
@@ -11,7 +10,33 @@
     Title: {{ event.title }}<br>
     Description: {{ event.description }}<br>
     Starts: {{ event.start_time }}<br>
-    Ends: {{ event.end_time }} <i style="color:grey;">(Length: {{ length }})</i> <br> 
+    Ends: {{ event.end_time }} <i style="color:grey;">(Length: {{ length }})</i> <br><br><br>
+    <a class="btn btn-info left modal-trigger" data-toggle="modal" data-target="#emailModal" href="{% url 'cal:calendar' %}"> Send Invite </a> 
+</div>
+
+
+
+<div class="modal fade" id="emailModal" tabindex="1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="emailModalLabel">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>

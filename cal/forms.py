@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateInput
-from cal.models import Event
+from django import forms
+from cal.models import *
 
 class EventForm(ModelForm):
   class Meta:
@@ -16,3 +17,8 @@ class EventForm(ModelForm):
     # input_formats parses HTML5 datetime-local input to datetime field
     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+class EmailForm(forms.ModelForm):
+  class Meta:
+    model = Email
+    fields = '__all__'
